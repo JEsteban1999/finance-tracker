@@ -24,13 +24,13 @@ This application provides a RESTful API for managing financial transactions. It 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/financial-transactions-api.git
+    git clone https://github.com/JEsteban1999/finance-tracker.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd financial-transactions-api
+    cd finance-tracker
     ```
 
 3. Install dependencies:
@@ -38,23 +38,11 @@ This application provides a RESTful API for managing financial transactions. It 
     ```bash
     npm install
     ```
-
-4. Configure the environment variables (see `.env.example` for reference):
-
-    ```bash
-    cp .env.example .env
-    ```
-
-5. Run database migrations (if applicable):
+    
+4. Start the server:
 
     ```bash
-    npm run migrate
-    ```
-
-6. Start the server:
-
-    ```bash
-    npm start
+    npm run dev
     ```
 
 ## Usage
@@ -211,7 +199,3 @@ To view the Swagger documentation, navigate to `http://localhost:3000/api-docs` 
 - **400 Bad Request**: The request was invalid or missing required parameters.
 - **404 Not Found**: The requested resource was not found.
 - **500 Internal Server Error**: An error occurred on the server.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

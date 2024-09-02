@@ -4,11 +4,11 @@ const router = express.Router();
 
 router.post('/', createTransaction);
 router.get('/', getAllTransactions);
-router.get('/:id', getTransactionById);
+router.get('/categories', getCategories);
 router.get('/summary', getSummary);
 router.get('/by-category', getByCategory);
 router.get('/by-date', getByDate);
-router.get('/categories', getCategories);
+router.get('/:id', getTransactionById);
 router.put('/:id', updateTransaction);
 router.delete('/:id', deleteTransaction);
 

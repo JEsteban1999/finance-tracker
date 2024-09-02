@@ -9,7 +9,6 @@ This application provides a RESTful API for managing financial transactions. It 
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 - [Error Handling](#error-handling)
-- [License](#license)
 
 ## Features
 

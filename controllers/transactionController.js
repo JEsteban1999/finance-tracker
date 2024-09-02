@@ -107,21 +107,32 @@ exports.createTransaction = async (req, res) => {
  * @swagger
  * /transactions:
  *   get:
- *     summary: Retrieve all transactions
- *     description: Fetches all transaction records from the database.
+ *     summary: Retrieve a paginated list of transactions
+ *     description: Fetches a paginated list of transactions. Supports pagination via query parameters `page` and `pageSize`.
  *     tags:
  *       - Transactions
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *         description: The page number to retrieve.
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *           example: 10
+ *         description: The number of transactions to retrieve per page.
  *     responses:
  *       200:
- *         description: A list of all transactions.
+ *         description: A paginated list of transactions.
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Transaction'
- *       500:
- *         description: Internal server error.
+ *               $ref: '#/components/schemas/PaginatedTransactions'
+ *       400:
+ *         description: Invalid pagination parameters.
  *         content:
  *           application/json:
  *             schema:
@@ -129,16 +140,55 @@ exports.createTransaction = async (req, res) => {
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "An unexpected error occurred."
+ *                   example: "Invalid pagination parameters"
+ *       500:
+ *         description: Server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Internal server error"
  */
 exports.getAllTransactions = async (req, res) => {
     try {
-        const transactions = await Transaction.findAll();
-        res.status(200).json(transactions);
+        // Obtener los parámetros de paginación de la consulta
+        const { page = 1, pageSize = 10 } = req.query;
+        
+        // Validar que los parámetros de paginación sean números
+        const pageNumber = parseInt(page, 10);
+        const pageSizeNumber = parseInt(pageSize, 10);
+
+        if (isNaN(pageNumber) || isNaN(pageSizeNumber) || pageNumber < 1 || pageSizeNumber < 1) {
+            return res.status(400).json({ error: 'Invalid pagination parameters' });
+        }
+
+        // Calcular el offset para la paginación
+        const offset = (pageNumber - 1) * pageSizeNumber;
+
+        // Obtener las transacciones con paginación
+        const transactions = await Transaction.findAll({
+            limit: pageSizeNumber,
+            offset: offset
+        });
+
+        // Obtener el total de transacciones para la paginación
+        const totalTransactions = await Transaction.count();
+
+        // Devolver las transacciones y la información de paginación
+        res.status(200).json({
+            total: totalTransactions,
+            page: pageNumber,
+            pageSize: pageSizeNumber,
+            transactions
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 /**
  * @swagger

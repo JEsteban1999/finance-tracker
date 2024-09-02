@@ -1,4 +1,4 @@
-# Financial Transactions API
+# Finance Tracker API
 
 This application provides a RESTful API for managing financial transactions. It includes functionality for creating, reading, updating, and deleting transactions, as well as filtering transactions by date and category. The API also includes endpoints for summarizing transactions and retrieving categories.
 

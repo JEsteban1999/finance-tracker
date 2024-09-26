@@ -5,7 +5,7 @@ const sequelize = require('./config/database');
 const transactionRoutes = require('./routes/transactionRoutes');
 const swaggerSetup = require('./swagger');
 
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use('/transactions', transactionRoutes);
 swaggerSetup(app);
 
 sequelize.sync().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
     });
 }).catch(error => console.log('Database connection failed: ', error));

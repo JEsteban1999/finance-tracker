@@ -130,7 +130,7 @@ exports.createTransaction = async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PaginatedTransactions'
+ *               $ref: '#/components/schemas/Transaction'
  *       400:
  *         description: Invalid pagination parameters.
  *         content:
